@@ -29,7 +29,7 @@ export class ConfigService {
         return `This action removes a #${id} config`;
     }
 
-    @Interval(1000)
+    @Interval(5000)
     async getNetwork() {
         try {
             let getNetwork$ = spawnAsync("python3", [
