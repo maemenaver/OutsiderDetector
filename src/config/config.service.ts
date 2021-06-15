@@ -33,6 +33,7 @@ export class ConfigService {
     async getNetwork() {
         try {
             let getNetwork$ = await spawnAsync("python3", [
+                "main.py",
                 process.env.SEARCH_RANGE,
             ]);
             console.dir(getNetwork$.stdout, {
