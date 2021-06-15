@@ -21,10 +21,16 @@ export class User {
     @Column()
     message: string;
 
-    constructor(createUserDto: CreateUserDto) {
-        if (createUserDto) {
-            this.MACAddress = createUserDto.MACAddress;
-            this.message = createUserDto.message;
+    @Column()
+    threshold: number = 0;
+
+    @Column()
+    isConnected: boolean = false;
+
+    constructor(MAC: string, message: string) {
+        if (MAC && message) {
+            this.MACAddress = MAC;
+            this.message = message;
         }
     }
 }

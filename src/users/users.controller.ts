@@ -6,6 +6,7 @@ import {
     Put,
     Param,
     Delete,
+    Query,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -16,8 +17,8 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Post()
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.usersService.create(createUserDto);
+    create(@Query("MAC") MAC: string, @Query("message") message: string) {
+        return this.usersService.create(MAC, message);
     }
 
     @Get()
@@ -25,18 +26,13 @@ export class UsersController {
         return await this.usersService.findAll();
     }
 
-    @Get(":id")
-    findOne(@Param("id") id: string) {
-        return this.usersService.findOne(+id);
+    @Get()
+    findOne(@Query("MAC") MAC: string) {
+        return this.usersService.findOne(MAC);
     }
 
-    @Put(":id")
-    update(@Param("id") id: string, @Body() updateUserDto: UpdateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
-    }
-
-    @Delete(":id")
-    remove(@Param("id") id: string) {
-        return this.usersService.remove(+id);
+    @Delete()
+    remove(@Query("MAC") MAC: string) {
+        return this.usersService.remove(MAC);
     }
 }

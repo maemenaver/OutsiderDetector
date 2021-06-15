@@ -4,18 +4,20 @@
 
 ## 실행 전 해야할 것
 
+-   모든 작업을 하기 전에 sudo -s 명령어를 입력하여 root에서 실행하도록 합니다.
 -   프로젝트 설치
-    -   https://github.com/maemenaver/OutsiderDetector.git
+    -   git clone https://github.com/maemenaver/OutsiderDetector.git
 -   파이썬 설치
     -   pip install --pre scapy[basic]
     -   ModuleNotFoundError: No module named 'scapy' 문제가 발생할 경우
-    -   sudo python3 -m pip install --pre scapy[basic]
+    -   python3 -m pip install --pre scapy[basic]
 -   nestJS 설치
     -   node 설치 (V12.21.0 ~ V16.0 작동 확인)
-    -   yarn 설치
-    -   nest-cli 설치
-    -   `yarn` 명령어 실행
+        -   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+        -   source ~/.bashrc
+        -   nvm install v14.17.1
+    -   npm install
 
-## 파이썬 모듈 실행
+## 실행
 
--   sudo python3 main.py
+-   npm run start

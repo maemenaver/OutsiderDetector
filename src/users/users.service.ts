@@ -1,24 +1,25 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { getMongoManager } from "typeorm";
-import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entities/user.entity";
 
 @Injectable()
 export class UsersService {
-    async create(createUserDto: CreateUserDto) {
+    async create(MAC: string, message: string) {
         const manager = getMongoManager("mongo");
 
-        const isExist = await this.exist(createUserDto.MACAddress);
-        if (isExist) {
-            throw new HttpException(
-                "Already exist MACAddress",
-                HttpStatus.CONFLICT
-            );
+        let user;
+        const isExist = await this.findOne(MAC);
+        switch (!!isExist) {
+            case true:
+                isExist.message = message;
+                user = isExist;
+                break;
+
+            case false:
+                user = new User(MAC, message);
+                break;
         }
-
-        const user = new User(createUserDto);
-
         return await manager.save(user);
     }
 
@@ -30,26 +31,31 @@ export class UsersService {
         return user;
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} user`;
-    }
+    async remove(MAC: string) {
+        const manager = getMongoManager("mongo");
 
-    update(id: number, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} user`;
-    }
-
-    async exist(MACAddress: string) {
-        const users = await this.findAll();
-
-        let isExist = false;
-        for (let i = 0; i < users.length || !isExist; i++) {
-            isExist = users[i].MACAddress == MACAddress;
+        const isExist = await this.findOne(MAC);
+        if (!isExist) {
+            throw new HttpException(
+                "Not Already exist MACAddress",
+                HttpStatus.CONFLICT
+            );
         }
 
-        return isExist;
+        return await manager.remove(isExist);
+    }
+
+    async findOne(MACAddress: string) {
+        const users = await this.findAll();
+        let user: User = null;
+        for (let i = 0; i < users.length; i++) {
+            const isExist = users[i].MACAddress == MACAddress;
+            if (isExist) {
+                user = users[i];
+                break;
+            }
+        }
+
+        return user;
     }
 }
