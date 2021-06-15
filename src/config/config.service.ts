@@ -37,10 +37,9 @@ export class ConfigService {
                 process.env.SEARCH_RANGE,
             ]);
             const result = await getNetwork$;
-            console.dir(result.stdout, {
-                maxArrayLength: null,
-                maxStringLength: null,
-            });
+            console.log(new Date());
+            const str = result.stdout.split("'");
+            console.dir(str, { maxArrayLength: null, maxStringLength: null });
         } catch (err) {
             console.error(err);
         }
