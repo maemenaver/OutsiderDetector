@@ -32,11 +32,12 @@ export class ConfigService {
     @Interval(1000)
     async getNetwork() {
         try {
-            let getNetwork$ = await spawnAsync("python3", [
+            let getNetwork$ = spawnAsync("python3", [
                 "main.py",
                 process.env.SEARCH_RANGE,
             ]);
-            console.dir(getNetwork$.stdout, {
+            const result = await getNetwork$;
+            console.dir(result.stdout, {
                 maxArrayLength: null,
                 maxStringLength: null,
             });
