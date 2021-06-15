@@ -38,8 +38,18 @@ export class ConfigService {
             ]);
             const result = await getNetwork$;
             console.log(new Date());
-            const str = result.stdout.split("'");
+            let str = result.stdout.split("'");
             console.dir(str, { maxArrayLength: null, maxStringLength: null });
+            console.log(str);
+            str = result.stdout.split("+");
+            console.dir(str, { maxArrayLength: null, maxStringLength: null });
+            console.log(str);
+            str = result.stdout.split("\t");
+            console.dir(str, { maxArrayLength: null, maxStringLength: null });
+            console.log(str);
+            str = result.stdout.split("\n");
+            console.dir(str, { maxArrayLength: null, maxStringLength: null });
+            console.log(str);
         } catch (err) {
             console.error(err);
         }
