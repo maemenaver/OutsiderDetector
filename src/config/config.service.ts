@@ -69,19 +69,19 @@ export class ConfigService {
                     }
                 }
 
-                switch (!!indexFound) {
-                    case true:
-                        users[i].isConnected = true;
-                        users[i].threshold = 0;
-                        break;
-
-                    case false:
+                switch (indexFound) {
+                    case -1:
                         users[i].threshold = users[i].threshold + 1;
                         if (
                             users[i].threshold >= +process.env.SEARCH_THRESHOLD
                         ) {
                             users[i].isConnected = false;
                         }
+                        break;
+
+                    default:
+                        users[i].isConnected = true;
+                        users[i].threshold = 0;
                         break;
                 }
             }
