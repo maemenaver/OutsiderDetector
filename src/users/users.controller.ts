@@ -16,9 +16,9 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @Post()
-    create(@Query("MAC") MAC: string, @Query("message") message: string) {
-        return this.usersService.create(MAC, message);
+    @Get("/create")
+    async create(@Query("MAC") MAC: string, @Query("message") message: string) {
+        return await this.usersService.create(MAC, message);
     }
 
     @Get()
@@ -31,7 +31,7 @@ export class UsersController {
         return this.usersService.findOne(MAC);
     }
 
-    @Delete()
+    @Get("/delete")
     remove(@Query("MAC") MAC: string) {
         return this.usersService.remove(MAC);
     }
