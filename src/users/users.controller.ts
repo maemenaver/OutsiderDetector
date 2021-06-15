@@ -26,8 +26,8 @@ export class UsersController {
         return await this.usersService.findAll();
     }
 
-    @Get()
-    findOne(@Query("MAC") MAC: string) {
+    @Get(":MAC")
+    findOne(@Param("MAC") MAC: string) {
         return this.usersService.findOne(MAC);
     }
 
